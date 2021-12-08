@@ -1,26 +1,32 @@
 import React from 'react';
-import { v4 as uuidv4 } from 'uuid';
+// import { v4 as uuidv4 } from 'uuid';
 import './App.css';
 import List from  './components/List';
 
-function App() {
-  const [ users, setUsers ] = React.useState([
+const users = [
     {id: 'a', name: 'Robin'},
     {id: 'b', name: 'Dennis'},
-  ]);
+  ];
+
+function App() {
   const [ text, setText ] = React.useState('');
+  const [ search, setSearch ] = React.useState('');
 
   const handleText = (event) => {
     setText(event.target.value);
   }
 
-  const handleAddUser = () => { 
-    setUsers(users.concat({ id: uuidv4(), name: text }));
+  const handleSearch = () => {
+    setSearch(text);
   }
 
-  const handleRemove = React.useCallback((id) => {
-    setUsers(users.filter((user) => user.id !== id));
-  },[users]);
+  // @todo: useMemo demo works, but method needs debugging
+  const filteredUsers = React.useMemo(
+    () =>
+    users.filter((user) => {
+    console.log('filteredUsers fn is running...')
+    return user.name.toLowerCase().includes(search.toLowerCase());
+  }), [search]);
 
   console.log('*** Render: App ***');
 
@@ -28,9 +34,9 @@ function App() {
     <React.Fragment>
       <div className="container">
         <input type="text" value={text} onChange={handleText} />
-        <button type="button" onClick={handleAddUser}>Add user</button>
+        <button type="button" onClick={handleSearch}>Search</button>
       </div>
-      <List list={users} onRemove={handleRemove} />
+      <List list={users} />
     </React.Fragment>
   );
 }

@@ -1,16 +1,16 @@
 import React from 'react';
 import ListItem from './ListItem';
 
-const List = ({list, onRemove}) => {
+const List = ({list}) => {
   console.log('*** Render: List ***');
   
   return (
     <ul>
       {list.map(item => (
-        <ListItem key={item.id} item={item} onRemove={onRemove} />
+        <ListItem key={item.id} item={item} />
       ))}
     </ul>
   );
 };
 
-export default React.memo(List);
+export default List;
