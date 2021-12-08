@@ -18,7 +18,11 @@ function App() {
     setUsers(users.concat({ id: uuidv4(), name: text }));
   }
 
-  console.log('*** app render ***');
+  const handleRemove = React.useCallback((id) => {
+    setUsers(users.filter((user) => user.id !== id));
+  },[users]);
+
+  console.log('*** Render: App ***');
 
   return (
     <React.Fragment>
@@ -26,7 +30,7 @@ function App() {
         <input type="text" value={text} onChange={handleText} />
         <button type="button" onClick={handleAddUser}>Add user</button>
       </div>
-      <List list={users} />
+      <List list={users} onRemove={handleRemove} />
     </React.Fragment>
   );
 }

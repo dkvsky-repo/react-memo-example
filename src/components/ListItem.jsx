@@ -1,10 +1,14 @@
 import React from 'react';
 
-const ListItem = ({item}) => {  
-  console.log('*** listItem render ***');
+const ListItem = ({item, onRemove}) => {  
+  console.log('*** Render: ListItem ***');
 
   return (
-    <i>{item.name}</i>
+    <li>
+      {item.name}
+      <button type="button" onClick={() => onRemove(item.id)} className="remove">Remove</button>
+    </li>
+
   );
 }
 
